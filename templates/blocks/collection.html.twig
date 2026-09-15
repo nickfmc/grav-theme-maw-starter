@@ -13,9 +13,11 @@
 {% endif %}
 {% set collection = page.collection({
     items: items_def,
-    order: {by: block.order_by|default('date'), dir: block.order_dir|default('desc')},
-    limit: block.limit|default(6)
+    order: {by: block.order_by|default('date'), dir: block.order_dir|default('desc')}
 }, false) %}
+{# The collection `limit` option only applies with pagination, so cap the ordered list here. #}
+{% set limit = block.limit|default(6) %}
+{% set collection = limit > 0 ? collection.slice(0, limit) : collection %}
 {% embed 'blocks/_section.html.twig' %}
     {% block inner %}
         {% import 'macros/ui.html.twig' as ui %}

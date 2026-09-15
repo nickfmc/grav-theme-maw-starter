@@ -1,7 +1,7 @@
 name: MAW Starter
 slug: maw-starter
 type: theme
-version: 1.3.0
+version: 1.3.1
 homepage: https://github.com/nickfmc/grav-theme-maw-starter
 bugs: https://github.com/nickfmc/grav-theme-maw-starter/issues
 description: AI-friendly, block-based starter theme for Grav 2.1. Design tokens, a typed block library, zero build step.

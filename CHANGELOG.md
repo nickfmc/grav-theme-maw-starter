@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.1 (2026-09-15)
+- Fix: `collection` block ignored `limit` (Grav only applies it with pagination); the list is now capped in the template.
+- Fix: `show_image: false` / `show_date: false` were ignored on collection cards (Twig `|default` treats false as empty).
+- Fix: consecutive plain sections no longer collapse the gap when the first one draws a divider. New `section--divided` class (put it in a block's `class` setting) adds the line and keeps the spacing.
+
 ## v1.3.0 (2026-09-15)
 - New `team` block: people grid with photo, name, role, bio and profile link.
 - New `donate` block: giving band with suggested-amount card linking to a donation page (`?amount=`).

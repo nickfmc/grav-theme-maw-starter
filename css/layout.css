@@ -66,8 +66,10 @@
   .section--text-light .eyebrow, .section--text-dark .eyebrow { color: inherit; opacity: 0.8; }
   .section--align-center { text-align: center; }
   .section--align-center .section-head, .section--align-center .stack > * { margin-inline: auto; }
-  /* Two plain sections in a row share one gap instead of doubling it */
-  .section--bg-none:not(.section--space-none) + .section--bg-none { padding-top: 0; }
+  /* Two plain sections in a row share one gap instead of doubling it... unless a divider line separates them
+     (.section--divided draws that line), because then the next section's content would touch the line. */
+  .section--bg-none:not(.section--space-none):not(.section--divided) + .section--bg-none { padding-top: 0; }
+  .section--divided { border-bottom: 1px solid var(--maw-border); }
 
   .section-head { max-width: 46rem; margin-bottom: var(--maw-space-7); }
   .section-head > * + * { margin-top: var(--maw-space-3); }
