@@ -26,8 +26,22 @@ class MawStarter extends Theme
     {
         // Subscribe statically. Never gate on isAdmin() (Admin2 sets admin context late).
         return [
-            'onTwigInitialized' => ['onTwigInitialized', 0],
+            'onTwigInitialized'   => ['onTwigInitialized', 0],
+            'onTwigTemplatePaths' => ['onTwigTemplatePaths', 100],
         ];
+    }
+
+    /**
+     * Site layer: `user/site/templates/` overrides any theme template by path, so a client site can customise
+     * markup without editing this theme (which sites include as a shared git submodule).
+     * CSS: `user/site/css/site.css` (loaded last) and `user/site/css/blocks/<type>.css`, see base/_section templates.
+     */
+    public function onTwigTemplatePaths(): void
+    {
+        $dir = $this->grav['locator']->findResource('user://site/templates', true);
+        if ($dir && is_dir($dir)) {
+            array_unshift($this->grav['twig']->twig_paths, $dir);
+        }
     }
 
     public function onTwigInitialized(): void

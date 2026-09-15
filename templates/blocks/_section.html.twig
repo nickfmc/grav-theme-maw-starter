@@ -13,7 +13,8 @@
     hidden      true to not render the block at all
     hide_on     [mobile, tablet, desktop]: hide on those screen sizes (css/utilities.css)
 
-  Also enqueues css/blocks/<type>.css once, if that file exists.
+  Also enqueues css/blocks/<type>.css once, if that file exists, then the site layer's
+  user/site/css/blocks/<type>.css (per-site block styling outside the shared theme).
 
   In a block template:
     {% embed 'blocks/_section.html.twig' %}
@@ -23,6 +24,8 @@
 {% set type = block.type|default('block') %}
 {% set block_css = 'theme://css/blocks/' ~ type ~ '.css' %}
 {% if url(block_css) %}{% do assets.addCss(block_css, 50) %}{% endif %}
+{% set site_block_css = 'user://site/css/blocks/' ~ type ~ '.css' %}
+{% if url(site_block_css) %}{% do assets.addCss(site_block_css, 49) %}{% endif %}
 
 {% set custom_bg = block.bg_color is defined and block.bg_color matches '/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/' ? block.bg_color : null %}
 {% set text_tone = custom_bg ? (block.text_color in ['light', 'dark'] ? block.text_color : custom_bg|maw_contrast) : null %}

@@ -61,10 +61,13 @@
     {% endif %}
     {# Block CSS (priority 50) is added by blocks/_section.html.twig only for blocks on this page #}
     {% do assets.addCss('theme://css/custom.css', 1) %}
+    {# Site layer (per client site, outside the shared theme): user/site/css/site.css wins over everything #}
+    {% if url('user://site/css/site.css') %}{% do assets.addCss('user://site/css/site.css', 0) %}{% endif %}
 {% endblock %}
 
 {% block javascripts %}
     {% do assets.addJs('theme://js/site.js', {group: 'bottom', priority: 100, loading: 'defer'}) %}
+    {% if url('user://site/js/site.js') %}{% do assets.addJs('user://site/js/site.js', {group: 'bottom', priority: 90, loading: 'defer'}) %}{% endif %}
 {% endblock %}
 
 {% block assets deferred %}
