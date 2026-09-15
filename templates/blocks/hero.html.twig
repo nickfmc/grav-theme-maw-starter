@@ -1,4 +1,5 @@
-{% set layout = block.layout|default(block.image ? 'split' : 'centered') %}
+{% set video_src = block.video ? block.video|maw_embed_url : '' %}
+{% set layout = block.layout|default(block.image or video_src ? 'split' : 'centered') %}
 {% set level = block.heading_level|default(first ? 1 : 2) %}
 {% embed 'blocks/_section.html.twig' with {default_spacing: 'lg', default_width: layout == 'centered' ? 'narrow' : 'default'} %}
     {% block inner %}
@@ -10,7 +11,14 @@
                 {% if block.text %}<div class="hero__text lead"{{ maw_edit_md('text') }}>{{ block.text|markdown|raw }}</div>{% endif %}
                 {{ ui.buttons(block.buttons, 'lg') }}
             </div>
-            {% if layout != 'centered' and block.image %}
+            {% if layout == 'split' and video_src %}
+                {# Video replaces the image in the split layout. No caption card: it would cover the player controls. #}
+                <div class="hero__media hero__video media-frame">
+                    <iframe src="{{ video_src|e }}" title="{{ (block.video_title ?: block.heading ?: 'Video')|e }}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            {% elseif layout != 'centered' and block.image %}
                 <div class="hero__media{{ layout == 'split' ? ' media-frame' }}">
                     {{ ui.image(block.image, media_owner ?? page, {alt: block.image_alt, width: layout == 'background' ? 2000 : 1100, class: layout == 'split' ? 'rounded shadow-lg' : '', eager: true, sizes: layout == 'background' ? '100vw' : '(max-width: 860px) 100vw, 50vw', edit: 'image'}) }}
                     {% if layout == 'split' %}{{ ui.caption(block) }}{% endif %}

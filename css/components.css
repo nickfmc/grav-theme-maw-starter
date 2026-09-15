@@ -46,6 +46,8 @@
   /* Media placeholder when a block has no image yet */
   .media-placeholder { aspect-ratio: 4 / 3; border-radius: var(--maw-radius-lg); background: linear-gradient(135deg, var(--maw-accent-soft), var(--maw-bg-alt)); border: 1px dashed var(--maw-border); }
   .rounded { border-radius: var(--maw-radius-lg); }
+  /* Cropped images from ui.image(): always the requested shape, whichever srcset candidate loads */
+  .img-crop { display: block; width: 100%; height: auto; aspect-ratio: var(--img-ratio, 4 / 3); object-fit: cover; }
 
   /* Image with an overlaid caption card (hero split, media-text) */
   .media-frame { position: relative; }

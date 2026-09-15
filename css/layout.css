@@ -66,9 +66,10 @@
   .section--text-light .eyebrow, .section--text-dark .eyebrow { color: inherit; opacity: 0.8; }
   .section--align-center { text-align: center; }
   .section--align-center .section-head, .section--align-center .stack > * { margin-inline: auto; }
-  /* Two plain sections in a row share one gap instead of doubling it... unless a divider line separates them
-     (.section--divided draws that line), because then the next section's content would touch the line. */
-  .section--bg-none:not(.section--space-none):not(.section--divided) + .section--bg-none { padding-top: 0; }
+  /* Two plain sections in a row share one gap instead of doubling it. Not after a hero (heroes are usually styled
+     as their own band) or a divider line (.section--divided), where the next section's content would touch the edge.
+     If a site paints a background on a section with CSS, give that block a `background` setting instead. */
+  .section--bg-none:not(.section--space-none):not(.section--divided):not(.block--hero) + .section--bg-none { padding-top: 0; }
   .section--divided { border-bottom: 1px solid var(--maw-border); }
 
   .section-head { max-width: 46rem; margin-bottom: var(--maw-space-7); }

@@ -39,6 +39,15 @@ form:
             header.image_alt:
               type: text
               label: 'Image alt text'
+            header.video:
+              type: text
+              label: 'Video URL (split layout)'
+              help: 'YouTube or Vimeo link. Shown instead of the image.'
+              placeholder: 'https://youtu.be/…'
+            header.video_title:
+              type: text
+              label: 'Video title'
+              help: 'Accessible name for the video player'
             header.image_caption_label:
               type: text
               label: 'Image caption label (split layout)'

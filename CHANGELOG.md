@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.4.0 (2026-09-15)
+- `hero`: new `video` (YouTube/Vimeo URL) and `video_title` fields; in the split layout the video replaces the image.
+- Images: cropped images keep their shape in CSS (`.img-crop`: aspect-ratio + object-fit: cover) instead of a server-side crop, so every srcset candidate has the right ratio and sites can set the focal point with `object-position`.
+- Spacing: the plain-section gap collapse no longer applies right after a hero.
+
 ## v1.3.1 (2026-09-15)
 - Fix: `collection` block ignored `limit` (Grav only applies it with pagination); the list is now capped in the template.
 - Fix: `show_image: false` / `show_date: false` were ignored on collection cards (Twig `|default` treats false as empty).

@@ -52,17 +52,24 @@
     {% set cls = opts.class|default('') %}
     {# opts.edit = field path: click-to-replace in the builder preview (wrapper has no box, so layout is unchanged) #}
     {% set edit_attr = opts.edit|default(null) ? maw_edit_image(opts.edit) : '' %}
-    {% if edit_attr %}<span style="display: contents"{{ edit_attr|raw }}>{% endif %}
+    {#
+      Cropped images (width + height): the srcset derivatives are generated from the uncropped original, so the
+      browser can pick an image with the wrong shape. Enforce the requested ratio in CSS (.img-crop, object-fit: cover)
+      through a --img-ratio custom property on a box-less wrapper.
+    #}
+    {% set cropped = opts.height|default(null) and opts.crop is not same as(false) %}
+    {% if cropped %}{% set cls = (cls ~ ' img-crop')|trim %}{% endif %}
+    {% if edit_attr or cropped %}<span style="display: contents{{ cropped ? '; --img-ratio: ' ~ opts.width|default(1200) ~ ' / ' ~ opts.height }}"{{ edit_attr|raw }}>{% endif %}
     {% if m is maw_medium %}
         {% if m.mime == 'image/svg+xml' or m.type != 'image' %}
             <img src="{{ m.url }}" alt="{{ alt|e }}" class="{{ cls }}" loading="{{ opts.eager ? 'eager' : 'lazy' }}">
         {% else %}
             {% set w = opts.width|default(1200) %}
-            {% if opts.height and opts.crop is not same as(false) %}
-                {% set m = m.cropZoom(w, opts.height) %}
-            {% else %}
-                {% set m = m.cropResize(w, w * 2) %}
-            {% endif %}
+            {#
+              No server-side crop: the shape comes from CSS (.img-crop: aspect-ratio + object-fit: cover), so the whole
+              image is available and a site can choose the focal point with object-position (e.g. top center for portraits).
+            #}
+            {% set m = m.cropResize(w, w * 2) %}
             {{ m.derivatives(360, w, 360).sizes(opts.sizes|default('(max-width: 860px) 100vw, 50vw')).loading(opts.eager ? 'eager' : 'lazy').html('', alt, cls)|raw }}
         {% endif %}
     {% elseif m %}
@@ -70,7 +77,7 @@
     {% elseif opts.placeholder is not same as(false) %}
         <div class="media-placeholder {{ cls }}" role="presentation"></div>
     {% endif %}
-    {% if edit_attr %}</span>{% endif %}
+    {% if edit_attr or cropped %}</span>{% endif %}
 {% endmacro %}
 
 {% macro rich(text, wide, edit) %}
