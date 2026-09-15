@@ -1,0 +1,37 @@
+{# Donate block: text beside a card of suggested amounts linking to a donation page. `block` is flattened. #}
+{% embed 'blocks/_section.html.twig' with {default_background: 'dark'} %}
+    {% block inner %}
+        {% set url = block.url|default('#') %}
+        {% set sep = '?' in url ? '&' : '?' %}
+        {% set target = block.new_tab ? ' target="_blank" rel="noopener"' : '' %}
+        <div class="donate">
+            <div class="donate__content stack">
+                {% if block.eyebrow %}<span class="eyebrow"{{ maw_edit('eyebrow') }}>{{ block.eyebrow }}</span>{% endif %}
+                {% if block.heading %}<h2 class="donate__title"{{ maw_edit('heading') }}>{{ block.heading }}</h2>{% endif %}
+                {% if block.text %}<div class="donate__text lead"{{ maw_edit_md('text') }}>{{ block.text|markdown|raw }}</div>{% endif %}
+            </div>
+            <div class="donate__card">
+                {% if block.card_title %}<h3 class="donate__card-title"{{ maw_edit('card_title') }}>{{ block.card_title }}</h3>{% endif %}
+                {% set amounts = block.amounts|default([]) %}
+                {% if amounts|length %}
+                    <div class="donate__amounts"{{ maw_edit_list('amounts', 'amount') }}>
+                        {% for a in amounts %}
+                            {% set number = a.label|default('')|replace({'$': '', ',': '', '€': '', '£': ''})|trim %}
+                            <a class="donate__amount{{ a.featured ? ' is-featured' }}"{{ maw_edit_item(loop.index0) }}
+                               href="{{ (number matches '/^[0-9.]+$/' ? url ~ sep ~ 'amount=' ~ number : url)|e }}"{{ target|raw }}>
+                                <span{{ maw_edit('amounts.' ~ loop.index0 ~ '.label') }}>{{ a.label }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if block.other_label %}
+                    <a class="donate__other" href="{{ url|e }}"{{ target|raw }}>
+                        <span{{ maw_edit('other_label') }}>{{ block.other_label }}</span>
+                        <span class="donate__currency" aria-hidden="true">&rarr;</span>
+                    </a>
+                {% endif %}
+                <a class="btn btn-primary donate__button" href="{{ url|e }}"{{ target|raw }}><span{{ maw_edit('button_label') }}>{{ block.button_label|default('Donate') }}</span></a>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

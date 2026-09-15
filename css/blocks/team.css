@@ -1,0 +1,14 @@
+/* Block: team - loaded only on pages that use it */
+@layer blocks {
+  .block--team .team { align-items: stretch; }
+  .block--team .team__member { height: 100%; }
+  .block--team .team__photo { aspect-ratio: 1 / 1; overflow: hidden; background: var(--maw-bg-alt); }
+  .block--team .team__photo img,
+  .block--team .team__photo .media-placeholder { display: block; width: 100%; height: 100%; object-fit: cover; border: 0; border-radius: 0; aspect-ratio: auto; }
+  .block--team .team__body { display: flex; flex: 1; flex-direction: column; gap: var(--maw-space-2); }
+  .block--team .team__name { margin: 0; font-size: var(--maw-text-xl); }
+  .block--team .team__role { margin: 0; font-size: var(--maw-text-sm); font-weight: 600; color: var(--maw-accent); }
+  .block--team .team__bio { font-size: var(--maw-text-sm); color: var(--maw-text-muted); }
+  .block--team .team__bio > :last-child { margin-bottom: 0; }
+  .block--team .team__link { margin-top: auto; padding-top: var(--maw-space-2); font-size: var(--maw-text-sm); font-weight: 600; color: var(--maw-link); }
+}

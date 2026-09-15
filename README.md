@@ -2,7 +2,7 @@
 
 Block-based, AI-friendly starter theme for Grav 2.1 by Mountain Air Web. Pages are built from a typed block library defined in YAML, styled with design tokens, and there is no build step.
 
-- **16 blocks** (hero, features, cards, media-text, FAQ, pricing, stats, logos, testimonials, gallery, contact, CTA, collection, embed, rich text, spacer). Each block is a blueprint, a template, and an optional CSS file.
+- **18 blocks** (hero, features, cards, media-text, FAQ, pricing, stats, logos, testimonials, team, gallery, contact, CTA, donate, collection, embed, rich text, spacer). Each block is a blueprint, a template, and an optional CSS file.
 - **Shared section settings** on every block: background presets or custom colour, spacing, width, alignment, reveal, `hidden`, and per-device `hide_on`.
 - **Design tokens** in `css/tokens.css`, with `@layer` ordering and light/dark mode.
 - **Agent-ready**: `bin/maw.php sync` generates `docs/ai/blocks.md` (fields plus YAML example for every block) in the site root, and `/styleguide` renders every block.

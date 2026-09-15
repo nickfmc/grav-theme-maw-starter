@@ -39,6 +39,13 @@ form:
             header.image_alt:
               type: text
               label: 'Image alt text'
+            header.image_caption_label:
+              type: text
+              label: 'Image caption label (split layout)'
+              help: 'Small uppercase line in the caption card over the image, e.g. "Family life"'
+            header.image_caption:
+              type: text
+              label: 'Image caption text'
             header.buttons:
               type: list
               new_item:

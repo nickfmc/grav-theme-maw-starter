@@ -47,6 +47,17 @@
   .media-placeholder { aspect-ratio: 4 / 3; border-radius: var(--maw-radius-lg); background: linear-gradient(135deg, var(--maw-accent-soft), var(--maw-bg-alt)); border: 1px dashed var(--maw-border); }
   .rounded { border-radius: var(--maw-radius-lg); }
 
+  /* Image with an overlaid caption card (hero split, media-text) */
+  .media-frame { position: relative; }
+  .media-caption { position: absolute; left: var(--maw-space-4); right: var(--maw-space-4); bottom: var(--maw-space-5); display: flex; flex-direction: column; gap: 0.2rem; max-width: max-content; padding: var(--maw-space-3) var(--maw-space-4); border-radius: var(--maw-radius); background: color-mix(in srgb, var(--maw-surface) 92%, transparent); border: 1px solid var(--maw-accent); box-shadow: var(--maw-shadow); color: var(--maw-link); font-weight: 700; line-height: var(--maw-leading-tight); }
+  .media-caption__label { font-size: var(--maw-text-xs); letter-spacing: 0.08em; text-transform: uppercase; }
+  .media-caption__text { font-size: var(--maw-text-sm); }
+
+  /* Attribution under a quote or story (media-text) */
+  .attribution { display: flex; flex-direction: column; gap: 0.15rem; margin: 0; }
+  .attribution__name { color: var(--maw-link); }
+  .attribution__role { font-size: var(--maw-text-sm); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--maw-accent); }
+
   /* Tags / taxonomy */
   .tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--maw-space-2); }
   .tag { display: inline-block; font-size: var(--maw-text-xs); padding: 0.2em 0.65em; border-radius: 999px; background: var(--maw-bg-alt); border: 1px solid var(--maw-border); color: var(--maw-text-muted); text-decoration: none; }

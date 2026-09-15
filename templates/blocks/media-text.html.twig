@@ -2,8 +2,9 @@
     {% block inner %}
         {% import 'macros/ui.html.twig' as ui %}
         <div class="split{{ block.image_side == 'right' ? ' split--reverse' }} media-text">
-            <div class="media-text__media">
+            <div class="media-text__media media-frame">
                 {{ ui.image(block.image, media_owner ?? page, {alt: block.image_alt, width: 1100, height: block.image_ratio == 'square' ? 1100 : null, class: 'rounded', edit: 'image'}) }}
+                {{ ui.caption(block) }}
             </div>
             <div class="media-text__content stack">
                 {% if block.eyebrow %}<span class="eyebrow"{{ maw_edit('eyebrow') }}>{{ block.eyebrow }}</span>{% endif %}
@@ -15,6 +16,12 @@
                             <li>{% include 'partials/icon.html.twig' with {name: 'check', size: 18} %}<span>{{ line }}</span></li>
                         {% endfor %}
                     </ul>
+                {% endif %}
+                {% if block.attribution_name or block.attribution_role %}
+                    <p class="attribution">
+                        {% if block.attribution_name %}<strong class="attribution__name"{{ maw_edit('attribution_name') }}>{{ block.attribution_name }}</strong>{% endif %}
+                        {% if block.attribution_role %}<span class="attribution__role"{{ maw_edit('attribution_role') }}>{{ block.attribution_role }}</span>{% endif %}
+                    </p>
                 {% endif %}
                 {{ ui.buttons(block.buttons) }}
             </div>

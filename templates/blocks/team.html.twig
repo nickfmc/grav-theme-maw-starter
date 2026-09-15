@@ -1,0 +1,27 @@
+{# Team block: people with photo, name, role, bio and optional profile link. `block` is flattened. #}
+{% embed 'blocks/_section.html.twig' %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        {{ ui.head(block) }}
+        <div class="team grid grid--{{ block.columns|default(3) }}"{{ maw_edit_list('items', 'person') }}>
+            {% for item in block.items|default([]) %}
+                <article class="team__member card"{{ maw_edit_item(loop.index0) }}>
+                    <div class="team__photo">
+                        {{ ui.image(item.image, media_owner ?? page, {alt: item.name, width: 640, height: 640, class: 'team__img', sizes: '(max-width: 640px) 100vw, 33vw', edit: 'items.' ~ loop.index0 ~ '.image'}) }}
+                    </div>
+                    <div class="team__body card__body">
+                        <h3 class="team__name"{{ maw_edit('items.' ~ loop.index0 ~ '.name') }}>{{ item.name }}</h3>
+                        {% if item.role %}<p class="team__role"{{ maw_edit('items.' ~ loop.index0 ~ '.role') }}>{{ item.role }}</p>{% endif %}
+                        {% if item.bio %}<div class="team__bio prose"{{ maw_edit_md('items.' ~ loop.index0 ~ '.bio') }}>{{ item.bio|markdown|raw }}</div>{% endif %}
+                        {% if item.url %}
+                            <a class="team__link" href="{{ item.url|e }}"{% if item.url starts with 'http' %} target="_blank" rel="noopener"{% endif %}>
+                                <span{{ maw_edit('items.' ~ loop.index0 ~ '.link_label') }}>{{ item.link_label|default('Profile') }}</span><span class="sr-only"> ({{ item.name }})</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        {{ ui.buttons(block.buttons) }}
+    {% endblock %}
+{% endembed %}

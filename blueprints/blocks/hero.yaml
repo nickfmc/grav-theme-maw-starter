@@ -27,3 +27,5 @@ form:
     .text: { type: textarea, label: Text (markdown), rows: 3 }
     .image: { type: filepicker, label: Image, preview_images: true, accept: ['image/*'] }
     .image_alt: { type: text, label: Image alt text }
+    .image_caption_label: { type: text, label: Image caption label (split layout), help: 'Small uppercase line in the caption card over the image, e.g. "Family life"' }
+    .image_caption: { type: text, label: Image caption text }

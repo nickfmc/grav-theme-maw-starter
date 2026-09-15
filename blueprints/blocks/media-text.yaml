@@ -22,6 +22,10 @@ form:
     .checklist: { type: textarea, label: Checklist (one item per line), rows: 3 }
     .image: { type: filepicker, label: Image, preview_images: true, accept: ['image/*'] }
     .image_alt: { type: text, label: Image alt text }
+    .image_caption_label: { type: text, label: Image caption label, help: 'Small uppercase line in the caption card over the image' }
+    .image_caption: { type: text, label: Image caption text }
+    .attribution_name: { type: text, label: Attribution name, help: 'Shown under the text, e.g. for a quote or story' }
+    .attribution_role: { type: text, label: Attribution role }
     .image_side:
       type: select
       label: Image side

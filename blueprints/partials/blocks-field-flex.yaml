@@ -17,6 +17,7 @@ form:
             collection: Collection
             contact: Contact
             cta: 'Call to action'
+            donate: Donate
             embed: Embed
             faq: FAQ
             features: Features
@@ -28,6 +29,7 @@ form:
             rich-text: 'Rich text'
             spacer: Spacer
             stats: Stats
+            team: Team
             testimonials: Testimonials
           fields:
             cards:
@@ -49,6 +51,11 @@ form:
               type: element
               import@:
                 type: blocks/cta
+                context: 'theme://blueprints'
+            donate:
+              type: element
+              import@:
+                type: blocks/donate
                 context: 'theme://blueprints'
             embed:
               type: element
@@ -104,6 +111,11 @@ form:
               type: element
               import@:
                 type: blocks/stats
+                context: 'theme://blueprints'
+            team:
+              type: element
+              import@:
+                type: blocks/team
                 context: 'theme://blueprints'
             testimonials:
               type: element

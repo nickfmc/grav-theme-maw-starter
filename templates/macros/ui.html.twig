@@ -5,7 +5,18 @@
   ui.buttons(block.buttons)          list of {label, url, style: primary|secondary|ghost, icon, new_tab}
   ui.image(ref, page, opts)          responsive <img> from a media ref; opts: {width, height, alt, class, crop, eager, edit}
   ui.rich(text, wide, edit)          markdown string -> HTML inside .prose; `edit` = field path for inline editing
+  ui.caption(block)                  image caption card overlay from block.image_caption_label / block.image_caption
+                                     (put it inside a positioned wrapper, e.g. .media-frame)
 #}
+
+{% macro caption(block) %}
+    {% if block.image_caption_label or block.image_caption %}
+        <div class="media-caption">
+            {% if block.image_caption_label %}<span class="media-caption__label"{{ maw_edit('image_caption_label') }}>{{ block.image_caption_label }}</span>{% endif %}
+            {% if block.image_caption %}<span class="media-caption__text"{{ maw_edit('image_caption') }}>{{ block.image_caption }}</span>{% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}
 
 {% macro head(block, level) %}
     {% set level = level|default(block.heading_level|default(2)) %}

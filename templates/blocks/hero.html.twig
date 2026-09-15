@@ -11,8 +11,9 @@
                 {{ ui.buttons(block.buttons, 'lg') }}
             </div>
             {% if layout != 'centered' and block.image %}
-                <div class="hero__media">
+                <div class="hero__media{{ layout == 'split' ? ' media-frame' }}">
                     {{ ui.image(block.image, media_owner ?? page, {alt: block.image_alt, width: layout == 'background' ? 2000 : 1100, class: layout == 'split' ? 'rounded shadow-lg' : '', eager: true, sizes: layout == 'background' ? '100vw' : '(max-width: 860px) 100vw, 50vw', edit: 'image'}) }}
+                    {% if layout == 'split' %}{{ ui.caption(block) }}{% endif %}
                 </div>
             {% endif %}
         </div>

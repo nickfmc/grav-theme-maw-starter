@@ -1,0 +1,17 @@
+/* Block: donate - loaded only on pages that use it */
+@layer blocks {
+  .block--donate .donate { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 30rem); gap: var(--maw-space-8); align-items: center; }
+  .block--donate .donate__title { font-size: var(--maw-text-3xl); margin: 0; }
+  .block--donate .donate__text { opacity: 0.85; }
+  .block--donate .donate__card { display: flex; flex-direction: column; gap: var(--maw-space-4); padding: var(--maw-space-6); border-radius: var(--maw-radius-lg); background: var(--maw-surface); color: var(--maw-text); border: 2px solid var(--maw-accent); box-shadow: var(--maw-shadow-lg); }
+  .block--donate .donate__card-title { margin: 0; font-size: var(--maw-text-xl); color: var(--maw-link); }
+  .block--donate .donate__amounts { display: grid; grid-template-columns: repeat(auto-fit, minmax(4.5rem, 1fr)); gap: var(--maw-space-2); padding: var(--maw-space-2); border-radius: var(--maw-radius-lg); background: var(--maw-bg-alt); border: 1px solid var(--maw-border); }
+  .block--donate .donate__amount { display: grid; place-items: center; padding: var(--maw-space-3) var(--maw-space-2); border-radius: var(--maw-radius); border: 1px solid var(--maw-border); background: var(--maw-bg-alt); color: var(--maw-text-muted); font-weight: 700; text-decoration: none; transition: background var(--maw-duration), color var(--maw-duration); }
+  .block--donate .donate__amount:hover, .block--donate .donate__amount.is-featured { background: var(--maw-accent); border-color: var(--maw-accent); color: var(--maw-accent-contrast); }
+  .block--donate .donate__other { display: flex; justify-content: space-between; align-items: center; padding: var(--maw-space-3) var(--maw-space-4); border-radius: var(--maw-radius); border: 1px solid var(--maw-accent); background: var(--maw-bg-alt); color: var(--maw-text-muted); font-size: var(--maw-text-sm); text-decoration: none; }
+  .block--donate .donate__currency { font-weight: 700; color: var(--maw-link); }
+  .block--donate .donate__button { width: 100%; justify-content: center; }
+  @media (max-width: 860px) {
+    .block--donate .donate { grid-template-columns: 1fr; gap: var(--maw-space-6); }
+  }
+}

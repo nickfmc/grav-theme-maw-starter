@@ -1,0 +1,38 @@
+title: Team
+description: People grid (board, staff, volunteers) with photo, name, role, short bio and an optional profile link.
+icon: fa-users
+category: social-proof
+# Example content, written flat for readability (docs and styleguide wrap it in the canonical shape).
+example:
+  type: team
+  eyebrow: Our people
+  heading: Meet the team
+  columns: 3
+  items:
+    - { name: Alex Kim, role: Chair, bio: 'Leads the board and our partnerships.', url: 'https://www.linkedin.com/', link_label: LinkedIn }
+    - { name: Sam Rivera, role: Treasurer, bio: 'Keeps our finances transparent.' }
+    - { name: Jordan Lee, role: Secretary, bio: 'Runs meetings and records.' }
+form:
+  import@: { type: blocks/_buttons, context: 'theme://blueprints' }
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .columns:
+      type: select
+      label: Columns
+      default: 3
+      options: { 2: '2', 3: '3', 4: '4' }
+    .items:
+      type: list
+      label: People
+      style: vertical
+      collapsed: true
+      new_item: { name: 'New person', role: 'Role' }
+      fields:
+        .image: { type: filepicker, label: Photo, preview_images: true, accept: ['image/*'] }
+        .name: { type: text, label: Name }
+        .role: { type: text, label: Role / title }
+        .bio: { type: markdown, label: Bio }
+        .url: { type: text, label: Profile link (optional) }
+        .link_label: { type: text, label: Link label, placeholder: LinkedIn }

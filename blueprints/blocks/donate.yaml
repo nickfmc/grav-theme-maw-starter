@@ -1,0 +1,49 @@
+title: Donate
+description: Giving call-to-action band with text beside a card of suggested amounts that link to your donation page (no payment handling on the site).
+icon: fa-heart
+category: commerce
+# Example content, written flat for readability (docs and styleguide wrap it in the canonical shape).
+example:
+  type: donate
+  background: dark
+  heading: Help us build the next home.
+  text: Your gift funds construction, accessible vans and family grants.
+  card_title: Give today
+  amounts:
+    - { label: '$25' }
+    - { label: '$50' }
+    - { label: '$100', featured: true }
+    - { label: '$250' }
+  other_label: Other amount
+  button_label: Give now
+  url: /donate
+form:
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .text: { type: textarea, label: Text (markdown), rows: 3 }
+    .card_title: { type: text, label: Card title }
+    .amounts:
+      type: list
+      label: Suggested amounts
+      style: vertical
+      new_item: { label: '$100' }
+      fields:
+        .label: { type: text, label: Amount label, placeholder: '$100' }
+        .featured:
+          type: toggle
+          label: Highlight
+          highlight: 1
+          default: 0
+          options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+          validate: { type: bool }
+    .other_label: { type: text, label: Other amount label, help: 'Leave empty to hide the "other amount" row' }
+    .button_label: { type: text, label: Button label, default: Donate }
+    .url: { type: text, label: Donation page URL, help: 'Amount links add ?amount=<number> to this URL' }
+    .new_tab:
+      type: toggle
+      label: Open in new tab
+      highlight: 0
+      default: 0
+      options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+      validate: { type: bool }
