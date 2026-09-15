@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.1 (2026-09-15)
+- Fix: `brand.container` was emitted through `|e('css')`, which escapes the decimal point — `72.5rem` became `72\2E 5rem`. That invalidated the `.container` width declaration, so every container on the site stretched to full width. The value is now validated as a CSS length (the same way `brand.accent` is validated as a hex colour) and written unescaped; anything that is not a plain length is ignored and the `tokens.css` default applies.
+
 ## v1.4.0 (2026-09-15)
 - `hero`: new `video` (YouTube/Vimeo URL) and `video_title` fields; in the split layout the video replaces the image.
 - Images: cropped images keep their shape in CSS (`.img-crop`: aspect-ratio + object-fit: cover) instead of a server-side crop, so every srcset candidate has the right ratio and sites can set the focal point with `object-position`.

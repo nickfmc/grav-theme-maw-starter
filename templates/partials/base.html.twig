@@ -7,6 +7,10 @@
 {% set brand = theme_var('brand') ?: {} %}
 {% set accent = brand.accent ?? '' %}
 {% set accent_ok = accent and accent matches '/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/' %}
+{% set container = brand.container ?? '' %}
+{# A CSS length, validated like the accent colour. `|e('css')` can't be used here: it escapes the
+   decimal point (72.5rem -> 72\2E 5rem), which invalidates the whole `.container` width rule. #}
+{% set container_ok = container and container matches '/^[0-9]+(\\.[0-9]+)?(px|rem|em|ch|vw|vmin|%)$/' %}
 <!DOCTYPE html>
 <html lang="{{ grav.language.getActive ?: grav.config.site.default_lang ?: 'en' }}"
       data-theme-default="{{ theme_var('theme_mode') ?: 'auto' }}"
@@ -26,7 +30,7 @@
     <style>
       :root {
         {% if accent_ok %}--maw-accent: {{ accent }};{% endif %}
-        {% if brand.container %}--maw-container: {{ brand.container|e('css') }};{% endif %}
+        {% if container_ok %}--maw-container: {{ container }};{% endif %}
         {% set css_unsafe = {'<': '', '>': '', ';': '', '{': '', '}': '', '\\': ''} %}
         {% if brand.font_body %}--maw-font-body: {{ brand.font_body|replace(css_unsafe)|raw }};{% endif %}
         {% if brand.font_heading and brand.font_heading != 'inherit' %}--maw-font-heading: {{ brand.font_heading|replace(css_unsafe)|raw }};{% endif %}

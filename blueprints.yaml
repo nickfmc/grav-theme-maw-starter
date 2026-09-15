@@ -1,7 +1,7 @@
 name: MAW Starter
 slug: maw-starter
 type: theme
-version: 1.4.0
+version: 1.4.1
 homepage: https://github.com/nickfmc/grav-theme-maw-starter
 bugs: https://github.com/nickfmc/grav-theme-maw-starter/issues
 description: AI-friendly, block-based starter theme for Grav 2.1. Design tokens, a typed block library, zero build step.
@@ -53,6 +53,7 @@ form:
               label: Container max width
               default: 72rem
               size: small
+              help: 'A plain CSS length: px, rem, em, ch, vw, vmin or %. Anything else is ignored and the theme default is used.'
             brand.font_body:
               type: text
               label: Body font stack
