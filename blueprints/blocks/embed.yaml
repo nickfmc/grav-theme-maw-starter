@@ -11,7 +11,7 @@ form:
   fields:
     .eyebrow: { type: text, label: Eyebrow }
     .heading: { type: text, label: Heading }
-    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .intro: { type: textarea, markdown: true, label: Intro (markdown), rows: 2 }
     .url: { type: text, label: URL }
     .title: { type: text, label: Accessible title }
     .ratio: { type: text, label: Aspect ratio, default: 16 / 9, size: small }

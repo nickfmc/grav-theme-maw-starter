@@ -28,6 +28,7 @@ form:
               label: Heading
             header.text:
               type: textarea
+              markdown: true
               label: 'Text (markdown)'
               rows: 3
             header.image:
@@ -74,7 +75,7 @@ form:
                 .style:
                   type: select
                   label: Style
-                  default: primary
+                  help: 'Leave unset for the default (first button primary, the rest secondary).'
                   options:
                     primary: Primary
                     secondary: Secondary
