@@ -12,7 +12,7 @@
         {% include 'blocks/rich-text.html.twig' with {block: {type: 'rich-text', html: page.content}} %}
     {% endif %}
 
-    {% include 'blocks/_render.html.twig' with {blocks: page.header.blocks} %}
+    {% include 'blocks/_render.html.twig' with {blocks: page.header.blocks, opens_page: not (body and position == 'top')} %}
 
     {% if body and position == 'bottom' %}
         {% include 'blocks/rich-text.html.twig' with {block: {type: 'rich-text', html: page.content}} %}

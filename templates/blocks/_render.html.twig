@@ -1,8 +1,10 @@
 {#
   Renders a list of blocks.
-  Usage (page):        {% include 'blocks/_render.html.twig' with {blocks: page.header.blocks} %}
+  Usage (page):        {% include 'blocks/_render.html.twig' with {blocks: page.header.blocks, opens_page: true} %}
   Usage (Flex object): {% include 'blocks/_render.html.twig' with {blocks: object.blocks, media_owner: object} %}
     `media_owner` is where bare image filenames are looked up (defaults to the current page).
+    `opens_page` says nothing renders above this list (no page title): the first block then owns the page's <h1>
+    and loads its image eagerly. A template that prints the title itself leaves it off.
 
   Stored shape (what Admin2 writes):  {type: faq, background: alt, faq: {heading: ..., items: [...]}}
   Templates receive `block` FLATTENED: shared settings + the content under `<type>` merged on top.
@@ -19,7 +21,7 @@
         {% include ['blocks/' ~ raw.type ~ '.html.twig', 'blocks/_missing.html.twig'] with {
             block: block,
             index: loop.index,
-            first: loop.first
+            first: loop.first and opens_page|default(false)
         } %}
     {% endif %}
 {% endfor %}

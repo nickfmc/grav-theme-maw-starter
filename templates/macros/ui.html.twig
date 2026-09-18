@@ -7,7 +7,14 @@
   ui.rich(text, wide, edit)          markdown string -> HTML inside .prose; `edit` = field path for inline editing
   ui.caption(block)                  image caption card overlay from block.image_caption_label / block.image_caption
                                      (put it inside a positioned wrapper, e.g. .media-frame)
+  ui.sizes(columns)                  `sizes` attribute for an image in a .grid--N, from the same breakpoints as
+                                     css/layout.css (one column ≤640px, two ≤960px, N above)
 #}
+
+{% macro sizes(columns) %}{% apply spaceless %}
+    {% set n = columns|default(3) %}
+    {% if n <= 1 %}100vw{% elseif n == 2 %}(max-width: 640px) 100vw, 50vw{% else %}(max-width: 640px) 100vw, (max-width: 960px) 50vw, {{ (100 / n)|round }}vw{% endif %}
+{% endapply %}{% endmacro %}
 
 {% macro caption(block) %}
     {% if block.image_caption_label or block.image_caption %}
@@ -35,6 +42,7 @@
     {% if buttons|filter(b => b.label and b.url)|length %}
         <div class="button-row"{{ maw_edit_list('buttons', 'button') }}>
             {% for b in buttons %}{% if b.label and b.url %}
+                {# No style set: the first button leads, the rest follow. The blueprint sets no default so the inspector shows the same. #}
                 <a{{ maw_edit_item(loop.index0) }} class="btn btn-{{ b.style|default(loop.first ? 'primary' : 'secondary')|maw_slug }}{{ size ? ' btn-' ~ size }}"
                    href="{{ b.url|e }}"{% if b.new_tab %} target="_blank" rel="noopener"{% endif %}>
                     {% if b.icon %}<i class="{{ b.icon|fa_icon }}" aria-hidden="true"></i>{% endif %}
