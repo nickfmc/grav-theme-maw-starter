@@ -18,7 +18,7 @@ form:
   fields:
     .eyebrow: { type: text, label: Eyebrow }
     .heading: { type: text, label: Heading }
-    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .intro: { type: textarea, markdown: true, label: Intro (markdown), rows: 2 }
     .source:
       type: text
       label: Source

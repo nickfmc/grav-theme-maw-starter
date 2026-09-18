@@ -20,6 +20,7 @@ form:
               label: Heading
             header.text:
               type: textarea
+              markdown: true
               label: 'Text (markdown)'
               rows: 3
             header.card_title:

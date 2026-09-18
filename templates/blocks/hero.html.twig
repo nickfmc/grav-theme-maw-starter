@@ -1,5 +1,7 @@
 {% set video_src = block.video ? block.video|maw_embed_url : '' %}
 {% set layout = block.layout|default(block.image or video_src ? 'split' : 'centered') %}
+{# The background layout paints light text over the image; without an image it would be light text on the page. #}
+{% if layout == 'background' and not block.image %}{% set layout = 'centered' %}{% endif %}
 {% set level = block.heading_level|default(first ? 1 : 2) %}
 {% embed 'blocks/_section.html.twig' with {default_spacing: 'lg', default_width: layout == 'centered' ? 'narrow' : 'default'} %}
     {% block inner %}
@@ -20,7 +22,7 @@
                 </div>
             {% elseif layout != 'centered' and block.image %}
                 <div class="hero__media{{ layout == 'split' ? ' media-frame' }}">
-                    {{ ui.image(block.image, media_owner ?? page, {alt: block.image_alt, width: layout == 'background' ? 2000 : 1100, class: layout == 'split' ? 'rounded shadow-lg' : '', eager: true, sizes: layout == 'background' ? '100vw' : '(max-width: 860px) 100vw, 50vw', edit: 'image'}) }}
+                    {{ ui.image(block.image, media_owner ?? page, {alt: block.image_alt, width: layout == 'background' ? 2000 : 1100, class: layout == 'split' ? 'rounded shadow-lg' : '', eager: first|default(false), sizes: layout == 'background' ? '100vw' : '(max-width: 860px) 100vw, 50vw', edit: 'image'}) }}
                     {% if layout == 'split' %}{{ ui.caption(block) }}{% endif %}
                 </div>
             {% endif %}

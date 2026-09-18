@@ -14,7 +14,7 @@ form:
   fields:
     .eyebrow: { type: text, label: Eyebrow }
     .heading: { type: text, label: Heading }
-    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .intro: { type: textarea, markdown: true, label: Intro (markdown), rows: 2 }
     .columns:
       type: select
       label: Columns
@@ -33,6 +33,6 @@ form:
         .image_alt: { type: text, label: Image alt }
         .meta: { type: text, label: Meta / label }
         .title: { type: text, label: Title }
-        .text: { type: textarea, label: Text (markdown), rows: 2 }
+        .text: { type: textarea, markdown: true, label: Text (markdown), rows: 2 }
         .url: { type: text, label: Link URL }
         .link_label: { type: text, label: Link label }

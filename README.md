@@ -6,7 +6,7 @@ Block-based, AI-friendly starter theme for Grav 2.1 by Mountain Air Web. Pages a
 - **Shared section settings** on every block: background presets or custom colour, spacing, width, alignment, reveal, `hidden`, and per-device `hide_on`.
 - **Design tokens** in `css/tokens.css`, with `@layer` ordering and light/dark mode.
 - **Agent-ready**: `bin/maw.php sync` generates `docs/ai/blocks.md` (fields plus YAML example for every block) in the site root, and `/styleguide` renders every block.
-- **Visual builder contract**: the templates carry `maw_edit*()` markers, so the [MAW Builder](https://github.com/nickfmc/grav-plugin-maw-builder) plugin can edit text, Markdown, images and repeaters directly on the page. The theme works without the plugin.
+- **Visual builder contract**: the templates carry `maw_edit*()` markers, Twig functions the [MAW Builder](https://github.com/nickfmc/grav-plugin-maw-builder) plugin registers, so it can edit text, Markdown, images and repeaters directly on the page. Without the plugin the theme registers empty stubs for them and works as before.
 
 ## Install
 
@@ -25,7 +25,7 @@ Then set `pages.theme: maw-starter` in `user/config/system.yaml`. The `form` plu
 ## Layout
 
 ```
-maw-starter.php            Twig helpers (maw_blocks, maw_media, fa_icon, maw_embed_url, maw_slug, maw_contrast, maw_visibility, maw_edit*)
+maw-starter.php            Twig helpers (maw_blocks, maw_media, fa_icon, maw_embed_url, maw_slug, maw_contrast, maw_visibility; maw_edit* stubs when the builder plugin is absent)
 maw-starter.yaml           theme defaults (brand, header, footer)
 bin/maw.php                CLI: sync | new-block <type> | lint | normalize | styleguide
 css/tokens.css             all design tokens (--maw-*) and the @layer order
