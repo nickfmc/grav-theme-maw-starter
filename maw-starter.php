@@ -19,6 +19,13 @@ use Twig\TwigTest;
  */
 class MawStarter extends Theme
 {
+    /**
+     * Container key MAW Builder 1.2.0+ sets once it has registered the `maw_edit*`
+     * Twig functions (its EditMarkers::REGISTERED). Mirrored here as a string so the
+     * theme never has to load a plugin class that may not be installed.
+     */
+    private const EDIT_MARKERS = 'maw_edit_markers';
+
     /** @var array<string,array>|null */
     protected ?array $catalog = null;
 
@@ -71,15 +78,23 @@ class MawStarter extends Theme
         $env->addFilter(new TwigFilter('maw_contrast', [$this, 'contrastTone']));
         // `block.hide_on|maw_visibility` → ['hide-on-mobile', ...] (shared setting, see css/utilities.css)
         $env->addFilter(new TwigFilter('maw_visibility', [$this, 'visibilityClasses']));
-        // Inline editing marker: ` data-maw-edit="heading"` inside the builder preview, empty on the live site.
-        $env->addFunction(new TwigFunction('maw_edit', [$this, 'editAttribute'], ['is_safe' => ['html']]));
-        // Same for Markdown output wrappers: ` data-maw-edit-md="text"` (+ data-maw-md-inline for |markdown(false)).
-        $env->addFunction(new TwigFunction('maw_edit_md', [$this, 'editMarkdownAttribute'], ['is_safe' => ['html']]));
-        // Image fields: ` data-maw-edit-image="image"` so the builder can open its media picker on click.
-        $env->addFunction(new TwigFunction('maw_edit_image', [$this, 'editImageAttribute'], ['is_safe' => ['html']]));
-        // Repeater (list) fields: container ` data-maw-list="items" data-maw-list-label="question"`, items ` data-maw-item="0"`.
-        $env->addFunction(new TwigFunction('maw_edit_list', [$this, 'editListAttribute'], ['is_safe' => ['html']]));
-        $env->addFunction(new TwigFunction('maw_edit_item', [$this, 'editItemAttribute'], ['is_safe' => ['html']]));
+        // Inline editing markers (`maw_edit*`). MAW Builder 1.2.0+ owns these
+        // (classes/EditMarkers.php) and registers them at onTwigInitialized priority 10,
+        // ahead of this theme's priority 0, setting `maw_edit_markers` once it has. Twig
+        // throws a LogicException on a duplicate name, so the theme only registers its
+        // own stubs when the plugin has not claimed them - i.e. on a site running without
+        // MAW Builder, or with a pre-1.2.0 version.
+        if (!isset($this->grav[self::EDIT_MARKERS])) {
+            // ` data-maw-edit="heading"` inside the builder preview, empty on the live site.
+            $env->addFunction(new TwigFunction('maw_edit', [$this, 'editAttribute'], ['is_safe' => ['html']]));
+            // Same for Markdown output wrappers: ` data-maw-edit-md="text"` (+ data-maw-md-inline for |markdown(false)).
+            $env->addFunction(new TwigFunction('maw_edit_md', [$this, 'editMarkdownAttribute'], ['is_safe' => ['html']]));
+            // Image fields: ` data-maw-edit-image="image"` so the builder can open its media picker on click.
+            $env->addFunction(new TwigFunction('maw_edit_image', [$this, 'editImageAttribute'], ['is_safe' => ['html']]));
+            // Repeater (list) fields: container ` data-maw-list="items" data-maw-list-label="question"`, items ` data-maw-item="0"`.
+            $env->addFunction(new TwigFunction('maw_edit_list', [$this, 'editListAttribute'], ['is_safe' => ['html']]));
+            $env->addFunction(new TwigFunction('maw_edit_item', [$this, 'editItemAttribute'], ['is_safe' => ['html']]));
+        }
         // `{% if x is maw_medium %}` — true for Grav media objects (resizable), false for URL strings.
         $env->addTest(new TwigTest('maw_medium', static fn ($v) => $v instanceof MediaObjectInterface));
     }
