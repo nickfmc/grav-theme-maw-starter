@@ -106,8 +106,8 @@ class MawStarter extends Theme
         // Without the plugin the stubs below report "no menu exists", so partials/navigation.html.twig
         // falls back to the automatic page tree and the site renders exactly as it always did.
         if (!isset($this->grav[self::MENUS])) {
-            $env->addFunction(new TwigFunction('maw_menu', static fn (string $id, array $options = []): array => []));
-            $env->addFunction(new TwigFunction('maw_menu_exists', static fn (string $id): bool => false));
+            $env->addFunction(new TwigFunction('maw_menu', static fn (string $id = '', array $options = []): array => []));
+            $env->addFunction(new TwigFunction('maw_menu_exists', static fn (string $id = ''): bool => false));
         }
         // `{% if x is maw_medium %}` — true for Grav media objects (resizable), false for URL strings.
         $env->addTest(new TwigTest('maw_medium', static fn ($v) => $v instanceof MediaObjectInterface));

@@ -93,8 +93,7 @@ form:
             header.menu:
               type: text
               label: Header menu
-              help: 'Which MAW Menus menu to render. Without that plugin, or before the menu is built, the page tree is used.'
-              default: header
+              help: 'Which MAW Menus menu to render. Leave empty to use whichever menu that plugin is set to treat as the main one. Without the plugin, or before the menu is built, the page tree is used.'
               size: medium
             header.cta:
               type: fieldset

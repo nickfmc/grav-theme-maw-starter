@@ -11,7 +11,8 @@
   `top: 100%; left: 0` on hover/:focus-within, with no JS — a third level would have no positioning rule
   and be unreachable on touch. Deeper menus need a flyout, which is a theme change.
 #}
-{% set menu_name = theme_var('header.menu')|default('header') %}
+{# Empty means "whichever menu the plugin calls the main one", so that choice lives in one place. #}
+{% set menu_name = theme_var('header.menu')|default('') %}
 
 {% if maw_menu_exists(menu_name) %}
     {% include 'partials/menu.html.twig' with {
