@@ -27,6 +27,15 @@
   .nav-list ul { list-style: none; padding: var(--maw-space-2); position: absolute; top: 100%; left: 0; min-width: 13rem; background: var(--maw-surface); border: 1px solid var(--maw-border); border-radius: var(--maw-radius); box-shadow: var(--maw-shadow); opacity: 0; visibility: hidden; transform: translateY(4px); transition: all var(--maw-duration) var(--maw-ease); }
   .nav-list li:hover > ul, .nav-list li:focus-within > ul { opacity: 1; visibility: visible; transform: none; }
 
+  /* MAW Menus items (partials/menu.html.twig). All new selectors — the rules above are untouched, so a
+     site with no menu built renders exactly as it did before 1.5.0. */
+  .menu-item__text { display: block; padding: var(--maw-space-2) var(--maw-space-3); font-weight: 600; font-size: var(--maw-text-sm); color: var(--maw-text-muted); }
+  /* A description belongs in a dropdown; in the top-level bar it will wrap. */
+  .menu-item__desc { display: block; font-size: var(--maw-text-xs); font-weight: 400; color: var(--maw-text-muted); }
+  .nav-list .menu-item--button > a { background: var(--maw-accent); color: var(--maw-accent-contrast); }
+  .nav-list .menu-item--button > a:hover { background: var(--maw-accent-hover); color: var(--maw-accent-contrast); }
+  .nav-list .menu-item--highlight > a { color: var(--maw-accent); }
+
   .nav-toggle { display: none; }
 
   @media (max-width: 860px) {

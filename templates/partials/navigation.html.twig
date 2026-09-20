@@ -1,22 +1,24 @@
 {#
-  Primary navigation: visible top-level pages (+ one dropdown level), then site.yaml `menu:` items.
-  Hide a page from nav with `visible: false` in its frontmatter.
-#}
-{% macro nav_items(items, depth) %}
-    {% for p in items|filter(p => p.visible and p.routable) %}
-        {% set children = p.children.visible %}
-        <li class="{{ p.activeChild ? 'is-active' }}">
-            <a href="{{ p.url }}" {{ p.active ? 'aria-current="page"' }}>{{ p.menu }}</a>
-            {% if depth < 2 and children|length and p.header.nav_children is not same as(false) and p.template() != 'blog' %}
-                <ul>{{ _self.nav_items(children, depth + 1) }}</ul>
-            {% endif %}
-        </li>
-    {% endfor %}
-{% endmacro %}
+  Primary navigation.
 
-<ul class="nav-list">
-    {{ _self.nav_items(pages.children.visible, 1) }}
-    {% for item in site.menu|default([]) %}
-        <li><a href="{{ item.url|e }}" {{ item.external ? 'target="_blank" rel="noopener"' }}>{{ item.text }}</a></li>
-    {% endfor %}
-</ul>
+  With MAW Menus installed and a menu of this name built, that menu is rendered. Otherwise the automatic
+  page tree (partials/navigation-auto.html.twig) — the behaviour every maw-starter site had before 1.5.0.
+
+  maw_menu_exists() rather than a length check on maw_menu(): a menu that exists but is empty is a
+  deliberate choice to show nothing, and must not silently fall back to the page tree.
+
+  `depth: 2` is a hard clamp. css/layout.css opens submenus with `.nav-list ul` positioned at
+  `top: 100%; left: 0` on hover/:focus-within, with no JS — a third level would have no positioning rule
+  and be unreachable on touch. Deeper menus need a flyout, which is a theme change.
+#}
+{% set menu_name = theme_var('header.menu')|default('header') %}
+
+{% if maw_menu_exists(menu_name) %}
+    {% include 'partials/menu.html.twig' with {
+        nodes: maw_menu(menu_name),
+        class: 'nav-list',
+        depth: 2
+    } only %}
+{% else %}
+    {% include 'partials/navigation-auto.html.twig' %}
+{% endif %}

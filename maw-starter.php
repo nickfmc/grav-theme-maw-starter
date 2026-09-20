@@ -26,6 +26,12 @@ class MawStarter extends Theme
      */
     private const EDIT_MARKERS = 'maw_edit_markers';
 
+    /**
+     * Container key MAW Menus sets once it has registered `maw_menu` / `maw_menu_exists`
+     * (its TwigFunctions::REGISTERED). Mirrored as a string for the same reason.
+     */
+    private const MENUS = 'maw_menus';
+
     /** @var array<string,array>|null */
     protected ?array $catalog = null;
 
@@ -94,6 +100,14 @@ class MawStarter extends Theme
             // Repeater (list) fields: container ` data-maw-list="items" data-maw-list-label="question"`, items ` data-maw-item="0"`.
             $env->addFunction(new TwigFunction('maw_edit_list', [$this, 'editListAttribute'], ['is_safe' => ['html']]));
             $env->addFunction(new TwigFunction('maw_edit_item', [$this, 'editItemAttribute'], ['is_safe' => ['html']]));
+        }
+        // Navigation menus. MAW Menus owns these (classes/TwigFunctions.php) and registers them at
+        // onTwigInitialized priority 10, ahead of this theme's 0, setting `maw_menus` once it has.
+        // Without the plugin the stubs below report "no menu exists", so partials/navigation.html.twig
+        // falls back to the automatic page tree and the site renders exactly as it always did.
+        if (!isset($this->grav[self::MENUS])) {
+            $env->addFunction(new TwigFunction('maw_menu', static fn (string $id, array $options = []): array => []));
+            $env->addFunction(new TwigFunction('maw_menu_exists', static fn (string $id): bool => false));
         }
         // `{% if x is maw_medium %}` — true for Grav media objects (resizable), false for URL strings.
         $env->addTest(new TwigTest('maw_medium', static fn ($v) => $v instanceof MediaObjectInterface));

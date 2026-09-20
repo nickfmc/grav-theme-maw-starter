@@ -1,0 +1,50 @@
+{#
+  Renders MAW Menus nodes. See the plugin README for the node shape.
+
+  Params:
+    nodes  list of nodes from maw_menu()
+    class  class for the top-level <ul> (default 'nav-list')
+    depth  how many levels to render (default 2)
+    aria   optional aria-label for the list
+
+  Markup contract — css/layout.css, @layer components:
+    a single <ul class="nav-list">, a BARE nested <ul> for submenus (the selector is `.nav-list ul`,
+    not a class), `.is-active` on the <li>, and aria-current="page" on the <a>. The hover/:focus-within
+    dropdown depends on `.nav-list li` being the direct positioned parent of its <ul>, so do not wrap
+    the submenu in anything.
+
+  Branches switch on node.kind, never on the stored item type: an item type this theme does not know
+  still arrives as 'link' or 'text' and renders sensibly.
+#}
+{% macro items(nodes, depth, level, fa) %}
+    {% for n in nodes %}
+        <li class="{{ n.classes }}">
+            {% if n.kind == 'link' %}
+                {#- Attributes are written as markup, not built as strings: Twig escapes a concatenated
+                    expression (only constant literals are exempt), which would turn the quotes into &quot;. -#}
+                <a href="{{ n.url|e }}"
+                   {%- if n.active %} aria-current="page"{% endif %}
+                   {%- if n.target %} target="{{ n.target|e }}"{% endif %}
+                   {%- if n.rel %} rel="{{ n.rel|e }}"{% endif %}>
+                    {%- if n.icon and fa %}<i class="{{ n.icon|fa_icon }}" aria-hidden="true"></i> {% endif -%}
+                    {{ n.label }}
+                    {%- if n.description %}<span class="menu-item__desc">{{ n.description }}</span>{% endif -%}
+                </a>
+            {% else %}
+                <span class="menu-item__text">
+                    {%- if n.icon and fa %}<i class="{{ n.icon|fa_icon }}" aria-hidden="true"></i> {% endif -%}
+                    {{ n.label }}
+                </span>
+            {% endif %}
+            {% if n.children and level < depth %}
+                <ul>{{ _self.items(n.children, depth, level + 1, fa) }}</ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% if nodes|length %}
+<ul class="{{ class|default('nav-list') }}"{% if aria is defined and aria %} aria-label="{{ aria|e }}"{% endif %}>
+    {{- _self.items(nodes, depth|default(2), 1, theme_var('fontawesome')) -}}
+</ul>
+{% endif %}

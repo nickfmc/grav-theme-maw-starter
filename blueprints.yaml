@@ -1,7 +1,7 @@
 name: MAW Starter
 slug: maw-starter
 type: theme
-version: 1.4.1
+version: 1.5.0
 homepage: https://github.com/nickfmc/grav-theme-maw-starter
 bugs: https://github.com/nickfmc/grav-theme-maw-starter/issues
 description: AI-friendly, block-based starter theme for Grav 2.1. Design tokens, a typed block library, zero build step.
@@ -90,6 +90,12 @@ form:
               highlight: 1
               options: { 1: PLUGIN_ADMIN.ENABLED, 0: PLUGIN_ADMIN.DISABLED }
               validate: { type: bool }
+            header.menu:
+              type: text
+              label: Header menu
+              help: 'Which MAW Menus menu to render. Without that plugin, or before the menu is built, the page tree is used.'
+              default: header
+              size: medium
             header.cta:
               type: fieldset
               title: Header button
